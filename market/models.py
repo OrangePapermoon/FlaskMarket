@@ -28,14 +28,24 @@ class User(db.Model, UserMixin):
         else:
             return f"{self.budget}$"
 
-    @property   #just another attribute of User, unique for each instance
+    @property   # getter and setter, getter provides controlled access to a private or protected attribute.
+                # setter allows you to validate or modify the value before assigning it to the attribute.
+    # The password setter encapsulates the logic for securely handling passwords, ensuring that only hashed passwords are stored.
+    # The actual password_hash attribute is hidden from direct access, making it secure.
+
     def password(self):
-        return self.password
+        return self.password #get password1 filled by user, because in routes.py, password1(in forms.py)
+                             # was passed to users as their password attribute
 
 
     @password.setter
     def password(self, plain_text_password):
         self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
+
+        # You don’t need to explicitly call the setter like a method (e.g., user_to_create.password('plaintext'))
+        # because Python automatically does this for you when you assign a value to the password property.
+        # When you assign a value to password (e.g., password=form.password1.data),
+        # Python automatically calls the @password.setter method.
 
 
     def check_password_correction(self, attempted_password):

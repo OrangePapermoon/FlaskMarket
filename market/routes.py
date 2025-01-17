@@ -4,13 +4,16 @@ from market.models import Item, User
 from market.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
 from flask_login import login_user, logout_user, login_required, current_user
 
+# A route in the context of web development (and specifically Flask) is essentially a URL path
 # decorators are like functions that execute before the actual function itself
-@app.route('/')    #decorators, '/' suggests route url
+@app.route('/')    #decorators, '/' suggests root url
 @app.route('/home')
 
 def home_page():
     return render_template('home.html')
 
+# This decorator binds a specific URL (or route) to a Python function, which is called a view function.
+# When a user navigates to the defined URL, the corresponding view function is executed.
 # #dynamic routes
 # @app.route('/about/<username>')
 # def about_page(username):
@@ -25,7 +28,7 @@ def market_page():
     selling_form = SellItemForm()
     if request.method == 'POST':    # differentiate POST and GET method access to avoid Confirm Form Resubmission everytime we refresh the page
         # Purchase Item Logic
-        purchased_item = request.form.get('purchased_item')
+        purchased_item = request.form.get('purchased_item')     #defined in items_modals.html
         p_item_object = Item.query.filter_by(name=purchased_item).first()
         if p_item_object:
             if current_user.can_purchase(p_item_object):

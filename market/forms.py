@@ -6,7 +6,7 @@ from market.models import User
 
 
 class RegisterForm(FlaskForm):
-    # validators's library allows you to build functions named validate_fieldname, and FlaskForm would
+    # validators' library allows you to build functions named validate_fieldname, and FlaskForm would
     # recognize the function and check whether there's any fieldname that matches it, and apply the
     # function to the field
     def validate_username(self, username_to_check):
